@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useGetBookByIdQuery, useUpdateBookMutation } from "../bookApi";
-import { IBook } from "../types";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useGetBookByIdQuery, useUpdateBookMutation } from "./BookApi";
+import type { IBook } from "./types";
 
 const EditBook = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,7 +19,7 @@ const EditBook = () => {
   }, [book]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,

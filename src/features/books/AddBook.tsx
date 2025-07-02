@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { useAddBookMutation } from "../bookApi";
-import { IBook } from "../types";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAddBookMutation } from "./BookApi";
+import type { IBook } from "./types";
+import { useNavigate } from "react-router-dom";
+
+
 
 const AddBook = () => {
   const [addBook] = useAddBookMutation();
   const navigate = useNavigate();
+
 
   const [formData, setFormData] = useState<Partial<IBook>>({
     title: "",
@@ -19,7 +22,7 @@ const AddBook = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,

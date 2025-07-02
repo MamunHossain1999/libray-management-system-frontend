@@ -1,13 +1,14 @@
 // src/app/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import { bookApi } from '../features/book/bookApi';
+import { bookApi } from '../../features/books/BookApi';
+
 
 export const store = configureStore({
   reducer: {
-    [bookApi.reducerPath]: bookApi.reducer, // ⬅️ add the API reducer
+    [bookApi.reducerPath]: bookApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(bookApi.middleware), // ⬅️ add the RTK Query middleware
+    getDefaultMiddleware().concat(bookApi.middleware),
 });
 
 // handy types
