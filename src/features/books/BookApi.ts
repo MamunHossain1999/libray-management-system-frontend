@@ -4,10 +4,10 @@ import type { IBook } from "./types";
 
 export const bookApi = createApi({
   reducerPath: "bookApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://your-backend-url/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
   tagTypes: ["Books"],
   endpoints: (builder) => ({
-    getBooks: builder.query<IBook[], void>({
+    getBooks: builder.query<{data: IBook[]}, void>({
       query: () => "/books",
       providesTags: ["Books"],
     }),

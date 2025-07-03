@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useGetBookByIdQuery } from "./BookApi";
+import { useGetBookByIdQuery } from "../BookApi";
 
 
 const BookDetails = () => {
