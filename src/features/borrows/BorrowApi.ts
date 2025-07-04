@@ -1,35 +1,40 @@
-import type { IBorrow } from "./types";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { IBorrow } from "./types"; // Make sure IBorrow is properly defined
 
-
-export const borrowApi = apiSlice.injectEndpoints({
+export const borrowApi = createApi({
+  reducerPath: "borrowApi", // ✅ Correct name
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  tagTypes: ["borrow"], // ✅ Use lowercase for consistency
   endpoints: (builder) => ({
-    borrowBook:  builder.mutation<IBorrow, { id: string; book: Partial<IBorrow> }>({
+    // ✅ Create borrow
+    borrowBook: builder.mutation<IBorrow, Partial<IBorrow>>({
       query: (data) => ({
-        url: "/borrows/borrow",
+        url: "/borrow",
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Borrow"],
+      invalidatesTags: ["borrow"],
     }),
-    returnBook: builder.mutation({
-      query: (borrowId) => ({
-        url: `/borrows/return/${borrowId}`,
-        method: "PATCH",
-      }),
-      invalidatesTags: ["Borrow"],
-    }),
-      
-    getAllBorrows: builder.query({
+
+    // ✅ Get all borrows
+    getAllBorrows: builder.query<IBorrow[], void>({
       query: () => "/borrows",
-      providesTags: ["Borrow"],
+      providesTags: ["borrow"],
+    }),
+
+    // ✅ Get borrow summary (example summary type)
+    getBorrowSummary: builder.query<
+      { title: string; isbn: string; totalQuantity: number }[],
+      void
+    >({
+      query: () => "/borrows/summary",
+      providesTags: ["borrow"],
     }),
   }),
 });
 
 export const {
   useBorrowBookMutation,
-  useReturnBookMutation,
   useGetAllBorrowsQuery,
+  useGetBorrowSummaryQuery,
 } = borrowApi;
-// updateBook: builder.mutation<IBook, { id: string; book: Partial<IBook> }>({
-//       query: ({ id, book }) => ({

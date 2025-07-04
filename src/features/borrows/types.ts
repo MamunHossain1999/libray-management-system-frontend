@@ -1,8 +1,16 @@
 export interface IBorrow {
   _id?: string;
-  book: string; 
+  book: {
+    _id: string;
+    title: string;
+  };
+//   user?: {
+//     _id: string;
+//     name: string;
+//   };
   quantity: number;
-  dueDate: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
+  dueDate: string;
+  status?: "borrowed" | "returned";
+  createdAt?: string;
+  updatedAt?: string;
 }
