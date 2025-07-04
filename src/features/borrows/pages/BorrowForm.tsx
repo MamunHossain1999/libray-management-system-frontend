@@ -17,7 +17,7 @@ const BorrowForm = () => {
       await borrowBook({ book: bookId, quantity, dueDate }).unwrap();
       toast.success("Book borrowed successfully!");
       navigate("/borrow-summary");
-    } catch (err) {
+    } catch {
       toast.error("Failed to borrow book. Please try again.");
     }
   };
