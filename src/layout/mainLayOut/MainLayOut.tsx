@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 const MainLayOut = () => {
     return (
-        <div className='container mx-auto border '>
+        <div className=' '>
             <Navbar/>
             <Outlet/>
         </div>

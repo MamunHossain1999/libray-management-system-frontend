@@ -1,4 +1,4 @@
-import React from "react";
+
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import type { IBook } from "../types";
@@ -30,13 +30,8 @@ const BookList = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">All Books</h2>
-      <button
-        onClick={() => navigate("/create-book")}
-        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      >
-        Add New Book
-      </button>
+      <h2 className="text-[18px] font-bold mb-4">All Books</h2>
+     
 
       <table className="min-w-full border border-gray-300">
         <thead>
