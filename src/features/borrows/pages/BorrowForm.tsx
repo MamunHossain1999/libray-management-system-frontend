@@ -1,43 +1,66 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useBorrowBookMutation } from "../BorrowApi";
-
+import { toast } from "react-toastify";
 
 const BorrowForm = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [dueDate, setDueDate] = useState("");
-  const [borrowBook, { isLoading }] = useBorrowBookMutation();
+  const [borrowBook, { isLoading, error }] = useBorrowBookMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await borrowBook({ book: bookId, quantity, dueDate });
-    navigate("/borrow-summary");
+    if (!bookId) return toast.error("Invalid book selected!");
+    try {
+      await borrowBook({ book: bookId, quantity, dueDate }).unwrap();
+      toast.success("Book borrowed successfully!");
+      navigate("/borrow-summary");
+    } catch (err) {
+      toast.error("Failed to borrow book. Please try again.");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 space-y-4">
       <h2 className="text-xl font-bold">📚 Borrow Book</h2>
-      <input
-        type="number"
-        value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-        min={1}
-        className="w-full p-2 border rounded"
-        placeholder="Quantity"
-        required
-      />
-      <input
-        type="date"
-        value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
-        className="w-full p-2 border rounded"
-        required
-      />
+
+      <label className="block">
+        Quantity
+        <input
+          type="number"
+          value={quantity}
+          min={1}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          className="w-full p-2 border rounded mt-1"
+          required
+        />
+      </label>
+
+      <label className="block">
+        Due Date
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          className="w-full p-2 border rounded mt-1"
+          required
+          min={new Date().toISOString().split("T")[0]} // Prevent past dates
+        />
+      </label>
+
+      {error && (
+        <p className="text-red-600">
+          {typeof error === "object" && "status" in error
+            ? "Failed to borrow book."
+            : String(error)}
+        </p>
+      )}
+
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:bg-blue-400"
         disabled={isLoading}
       >
         {isLoading ? "Borrowing..." : "Borrow Book"}
