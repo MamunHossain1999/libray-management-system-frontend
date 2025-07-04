@@ -18,24 +18,24 @@ export const borrowApi = createApi({
 
     // Get all borrows
     getAllBorrows: builder.query<IBorrow[], void>({
-      query: () => "/borrows",
+      query: () => "/borrow",
       providesTags: ["borrow"],
     }),
 
-    // Get borrow summary
+    // Get borrow summary 
     getBorrowSummary: builder.query<
       { title: string; isbn: string; totalQuantity: number }[],
       void
     >({
-      query: () => "/borrows/summary",
+      query: () => "/borrow/summary",
       providesTags: ["borrow"],
     }),
 
     // Return a borrowed book
     returnBook: builder.mutation<void, string>({
       query: (borrowId) => ({
-        url: `/borrows/return/${borrowId}`,  // তোমার backend এ এই রুট থাকতে হবে
-        method: "POST", // অথবা PUT/DELETE যেভাবে তোমার backend থাকে
+        url: `/borrow/${borrowId}`, 
+        method: "POST",
       }),
       invalidatesTags: ["borrow"],
     }),
@@ -46,5 +46,5 @@ export const {
   useBorrowBookMutation,
   useGetAllBorrowsQuery,
   useGetBorrowSummaryQuery,
-  useReturnBookMutation,  // এটা অবশ্যই যোগ করতে হবে
+  useReturnBookMutation,
 } = borrowApi;

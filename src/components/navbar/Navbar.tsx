@@ -1,33 +1,60 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, User } from "lucide-react";
 
 const Navbar = () => {
   return (
-    <div className="w-full md:container mx-auto">
-      <nav className="flex justify-between items-center p-4">
+    <div className="w-full bg-green-200 mx-auto">
+      <nav className="flex justify-between container mx-auto items-center p-4">
         <Link to="/" className="text-xl font-bold cursor-pointer">
           My Library
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-4">
-          <Link to="/">
-            <Button variant="ghost" className="cursor-pointer">Home</Button>
-          </Link>
-          <Link to="/create-book">
-            <Button variant="ghost" className="cursor-pointer">AddBooks</Button>
-          </Link>
-          <Link to="/borrow-summary">
-            <Button variant="ghost" className="cursor-pointer">Summary</Button>
-          </Link>
+          <NavLink to="/" end>
+            {({ isActive }) => (
+              <Button
+                variant="ghost"
+                className={`cursor-pointer ${isActive ? "bg-green-500 text-white" : ""}`}
+              >
+                All Books
+              </Button>
+            )}
+          </NavLink>
+
+          <NavLink to="/create-book">
+            {({ isActive }) => (
+              <Button
+                variant="ghost"
+                className={`cursor-pointer ${isActive ? "bg-green-500 text-white" : ""}`}
+              >
+                Add Book
+              </Button>
+            )}
+          </NavLink>
+
+          <NavLink to="/borrow-summary">
+            {({ isActive }) => (
+              <Button
+                variant="ghost"
+                className={`cursor-pointer ${isActive ? "bg-green-500 text-white" : ""}`}
+              >
+                Summary
+              </Button>
+            )}
+          </NavLink>
+
+          
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -37,10 +64,14 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem asChild>
-                <Link to="/profile" className="cursor-pointer w-full">Profile</Link>
+                <Link to="/profile" className="cursor-pointer w-full">
+                  Profile
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/logout" className="cursor-pointer w-full">Logout</Link>
+                <Link to="/logout" className="cursor-pointer w-full">
+                  Logout
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -54,15 +85,46 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent>
               <div className="flex flex-col space-y-4 mt-8">
-                <Link to="/">
-                  <Button variant="ghost" className="cursor-pointer w-full">Home</Button>
-                </Link>
-                <Link to="/books">
-                  <Button variant="ghost" className="cursor-pointer w-full">Books</Button>
-                </Link>
-                <Link to="/borrow-summary">
-                  <Button variant="ghost" className="cursor-pointer w-full">Summary</Button>
-                </Link>
+                <NavLink to="/" end>
+                  {({ isActive }) => (
+                    <Button
+                      variant="ghost"
+                      className={`cursor-pointer w-full ${
+                        isActive ? "bg-green-500 text-white" : ""
+                      }`}
+                    >
+                       All Books
+                    </Button>
+                  )}
+                </NavLink>
+
+                <NavLink to="/create-book">
+                  {({ isActive }) => (
+                    <Button
+                      variant="ghost"
+                      className={`cursor-pointer w-full ${
+                        isActive ? "bg-green-500 text-white" : ""
+                      }`}
+                    >
+                      Add Book
+                    </Button>
+                  )}
+                </NavLink>
+
+                <NavLink to="/borrow-summary">
+                  {({ isActive }) => (
+                    <Button
+                      variant="ghost"
+                      className={`cursor-pointer w-full ${
+                        isActive ? "bg-green-500 text-white" : ""
+                      }`}
+                    >
+                      Summary
+                    </Button>
+                  )}
+                </NavLink>
+
+                
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -72,10 +134,14 @@ const Navbar = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem asChild>
-                      <Link to="/profile" className="cursor-pointer w-full">Profile</Link>
+                      <Link to="/profile" className="cursor-pointer w-full">
+                        Profile
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/logout" className="cursor-pointer w-full">Logout</Link>
+                      <Link to="/logout" className="cursor-pointer w-full">
+                        Logout
+                      </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

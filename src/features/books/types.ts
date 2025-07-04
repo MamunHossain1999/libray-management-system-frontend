@@ -1,3 +1,4 @@
+
 export interface IBook {
   _id: string;
   title: string;
@@ -7,4 +8,13 @@ export interface IBook {
   description?: string;
   copies: number;
   available: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
+}
+
+export interface IApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
 }
