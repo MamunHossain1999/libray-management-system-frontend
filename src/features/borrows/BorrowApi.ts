@@ -5,9 +5,10 @@ import type {
   IBorrowSummaryResponse,
 } from "./types";
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 export const borrowApi = createApi({
   reducerPath: "borrowApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://api-theta-navy.vercel.app/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl}),
   tagTypes: ["Borrow"],
   endpoints: (builder) => ({
     // Create Borrow

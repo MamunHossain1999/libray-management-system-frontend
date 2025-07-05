@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { IApiResponse, IBook } from "./types";
 
-
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 export const bookApi = createApi({
   reducerPath: "bookApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://api-theta-navy.vercel.app/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["Books"],
   endpoints: (builder) => ({
     getBooks: builder.query<{data: IBook[]}, void>({
