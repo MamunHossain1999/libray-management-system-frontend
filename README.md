@@ -1,69 +1,85 @@
-# React + TypeScript + Vite
+# 📚 Minimal Library Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean and functional client-side **Library Management System** built with **React**, **TypeScript**, **Redux Toolkit Query**, and **Tailwind CSS**. This system enables users to manage books and borrow records without authentication.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Project Overview
 
-## Expanding the ESLint configuration
+This project demonstrates:
+- Modern React development with **TypeScript**
+- State and API management using **Redux Toolkit Query**
+- Responsive UI with **Tailwind CSS**
+- CRUD and aggregation logic via RESTful API integration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+All routes are public and focus solely on core library features such as viewing, adding, editing, borrowing, and summarizing books.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## ✅ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 1. Public Routes
+- All pages are accessible without login or authentication.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. 📚 Book Management
+- **Book List Table**: Shows title, author, genre, ISBN, copies, availability, and actions.
+- **Edit Book**: Opens a pre-filled form to update book data.
+- **Delete Book**: Removes book after confirmation.
+- **Add Book**: Form with fields like Title, Author, Genre, ISBN, Description, Copies.
+- **Borrow Book**: Opens a form to borrow a selected book.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+#### Business Logic:
+- Copies = 0 ➝ Book marked as *Unavailable*
+- UI reflects real-time changes upon CRUD operations.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 3. 🔄 Borrow Functionality
+- Borrow form with fields: **Quantity**, **Due Date**
+- Borrowing restricted to available copies
+- Updates copies and availability status dynamically
+- Success feedback via toast and redirection to borrow summary
+
+### 4. 📊 Borrow Summary
+- Aggregated view of all borrowed books
+- Shows: Book Title, ISBN, Total Quantity Borrowed
+
+---
+
+## 🧩 Routes & Pages
+
+| Route | Description |
+|-------|-------------|
+| `/books` | All books list with CRUD and borrow actions |
+| `/create-book` | Add a new book |
+| `/books/:id` | View single book details |
+| `/edit-book/:id` | Edit an existing book |
+| `/borrow/:bookId` | Borrow a book |
+| `/borrow-summary` | Borrowed books summary |
+
+---
+
+## 🖥️ UI/UX
+
+- **Minimalist Design** using Tailwind CSS
+- **Responsive** for mobile, tablet, and desktop
+- **Clean Navigation**: Header with links to main sections
+- **Toast Notifications** for user feedback
+- **Type-Safe Forms** with validation
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | React + TypeScript |
+| State Management | Redux Toolkit + RTK Query |
+| Styling | Tailwind CSS |
+| Backend | Node.js + Express.js |
+| Database | MongoDB + Mongoose |
+
+---
+
+## 🌐 Live Demo
+
+> 🔗 [https://libray-rho.vercel.app/]
+> 🔗 [https://api-theta-navy.vercel.app/](#)

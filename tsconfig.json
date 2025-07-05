@@ -9,8 +9,11 @@
     }
   ],
   "compilerOptions": {
+    // "outDir": "dist",
+    // "noEmit": true,
+    // "rootDir": "src",
     "baseUrl": ".",
-     "types": ["vite/client"],
+    //  "types": ["vite/client"],
     "paths": {
       "@/*": ["./src/*"]
     },
