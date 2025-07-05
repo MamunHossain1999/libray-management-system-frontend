@@ -4,7 +4,7 @@ import type { IBook } from "./types";
 
 export const bookApi = createApi({
   reducerPath: "bookApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api-theta-navy.vercel.app/api" }),
   tagTypes: ["Books"],
   endpoints: (builder) => ({
     getBooks: builder.query<{data: IBook[]}, void>({

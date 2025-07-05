@@ -3,7 +3,7 @@ import type { IBorrow } from "./types";
 
 export const borrowApi = createApi({
   reducerPath: "borrowApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api-theta-navy.vercel.app/api" }),
   tagTypes: ["borrow"],
   endpoints: (builder) => ({
     // Create borrow

@@ -39,7 +39,7 @@ const BorrowSummary = () => {
             </tr>
           </thead>
           <tbody>
-            {summary?.map((item, i) => (
+            {summary.map((item, i) => (
               <tr
                 key={item.book.isbn || i}
                 className="text-center hover:bg-gray-50"
