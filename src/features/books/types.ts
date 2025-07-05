@@ -13,8 +13,8 @@ export interface IBook {
   __v?: number;
 }
 
-export interface IApiResponse<T> {
+export interface IApiResponse {
   success: boolean;
   message: string;
-  data: T;
+  data: IBook;
 }

@@ -2,13 +2,16 @@ import { useGetAllBorrowsQuery, useReturnBookMutation } from "../BorrowApi";
 import type { IBorrow } from "../types";
 
 const BorrowList = () => {
-  const { data: borrows, isLoading, isError } = useGetAllBorrowsQuery();
+  const { data: borrowsResponse, isLoading, isError } = useGetAllBorrowsQuery();
+  const borrows = borrowsResponse?.data || [];
+
   const [returnBook, { isLoading: isReturning }] = useReturnBookMutation();
 
   const handleReturn = async (id: string | undefined) => {
     if (!id) return;
     try {
       await returnBook(id).unwrap();
+      // Optionally: show toast or confirmation here
     } catch (error) {
       console.error("Failed to return book:", error);
     }
@@ -33,18 +36,23 @@ const BorrowList = () => {
             </tr>
           </thead>
           <tbody>
-            {borrows && borrows.length > 0 ? (
+            {borrows.length > 0 ? (
               borrows.map((item: IBorrow, index: number) => (
                 <tr key={item._id} className="text-center hover:bg-gray-50">
                   <td className="p-2 border">{index + 1}</td>
                   <td className="p-2 border text-left">
-                    {typeof item.book === "object" && "title" in item.book
+                    {item.book &&
+                    typeof item.book === "object" &&
+                    "title" in item.book
                       ? item.book.title
                       : "Unknown Book"}
                   </td>
                   <td className="p-2 border">
-                    {new Date(item.borrowDate).toLocaleDateString()}
+                    {item.borrowDate
+                      ? new Date(item.borrowDate).toLocaleDateString()
+                      : "N/A"}
                   </td>
+
                   <td className="p-2 border capitalize">{item.status}</td>
                   <td className="p-2 border">
                     {item.status === "borrowed" ? (

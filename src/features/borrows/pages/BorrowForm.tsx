@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useBorrowBookMutation } from "../BorrowApi";
 import { toast } from "react-toastify";
+import { useCreateBorrowMutation } from "../BorrowApi"; // ✅ ঠিক hook import
 
 const BorrowForm = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [dueDate, setDueDate] = useState("");
-  const [borrowBook, { isLoading, error }] = useBorrowBookMutation();
+
+  const [createBorrow, { isLoading, error }] = useCreateBorrowMutation(); // ✅ ঠিক হুক
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bookId) return toast.error("Invalid book selected!");
     try {
-      await borrowBook({ book: bookId, quantity, dueDate }).unwrap();
+      await createBorrow({ book: bookId, quantity, dueDate }).unwrap(); // ✅ ঠিক ফাংশন
       toast.success("Book borrowed successfully!");
       navigate("/borrow-summary");
     } catch {

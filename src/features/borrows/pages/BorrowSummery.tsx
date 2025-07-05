@@ -1,5 +1,6 @@
 import { useGetBorrowSummaryQuery } from "../BorrowApi";
 
+
 interface BorrowSummaryItem {
   book: {
     title: string;
@@ -7,6 +8,7 @@ interface BorrowSummaryItem {
   };
   totalQuantity: number;
 }
+
 
 const BorrowSummary = () => {
   const { data, isLoading, isError } = useGetBorrowSummaryQuery();
@@ -39,7 +41,7 @@ const BorrowSummary = () => {
             </tr>
           </thead>
           <tbody>
-            {summary.map((item, i) => (
+            {summary?.map((item, i) => (
               <tr
                 key={item.book.isbn || i}
                 className="text-center hover:bg-gray-50"

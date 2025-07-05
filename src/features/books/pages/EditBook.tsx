@@ -2,27 +2,34 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGetBookByIdQuery, useUpdateBookMutation } from "../BookApi";
-import type { IBook } from "../types";
+import type { IBook} from "../types";
 
 const EditBook = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: book, isLoading, isError } = useGetBookByIdQuery(id!);
+  const { data: bookResponse, isLoading, isError } = useGetBookByIdQuery(id!);
   const [updateBook] = useUpdateBookMutation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Partial<IBook>>({});
 
   useEffect(() => {
-    if (book) {
-      setFormData(book);
+    if (bookResponse?.data) {
+      setFormData(bookResponse.data);
     }
-  }, [book]);
+  }, [bookResponse]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : type === "number"
+          ? Number(value)
+          : value,
     }));
   };
 
@@ -41,12 +48,12 @@ const EditBook = () => {
     }
   };
 
-  if (isLoading) return <p>Loading book data...</p>;
-  if (isError) return <p>Failed to load book data.</p>;
+  if (isLoading) return <p className="text-center py-4">Loading book data...</p>;
+  if (isError || !bookResponse) return <p className="text-center py-4 text-red-500">Failed to load book data.</p>;
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h2 className="text-[18px] font-bold mb-4">Edit Book</h2>
+    <div className="max-w-xl mx-auto p-4 pt-12">
+      <h2 className="text-[18px] font-bold mb-4 text-center">Edit Book</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"

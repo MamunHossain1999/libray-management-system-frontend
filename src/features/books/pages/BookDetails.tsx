@@ -5,12 +5,12 @@ import type { IBook } from "../types";
 
 const BookDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, isLoading, isError } = useGetBookByIdQuery(id!);
+  const { data:details, isLoading, isError } = useGetBookByIdQuery(id!);
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
-  if (isError || !data) return <p className="text-center mt-10 text-red-500">Failed to load book details.</p>;
+  if (isError || !details) return <p className="text-center mt-10 text-red-500">Failed to load book details.</p>;
 
-  const book: IBook = data.data;
+  const book: IBook = details.data;
 
   return (
     <div className="max-w-2xl mx-auto p-4 mt-12">

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import type { IBook } from "../types";
@@ -11,15 +12,29 @@ const BookList = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetBooksQuery();
   const books: IBook[] = data?.data ?? [];
-  const [deleteBook] = useDeleteBookMutation();
+  const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
 
-  const handleDelete = async (id: string) => {
+  // Modal control state
+  const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  // Delete handle function
+  const handleDelete = async () => {
+    if (!deleteId) return;
     try {
-      await deleteBook(id).unwrap();
+      await deleteBook(deleteId).unwrap();
       toast.success("Book deleted successfully");
+      setShowModal(false);
+      setDeleteId(null);
     } catch {
       toast.error("Failed to delete book");
     }
+  };
+
+  // Open modal and set deleteId
+  const openModal = (id: string) => {
+    setDeleteId(id);
+    setShowModal(true);
   };
 
   if (isLoading) return <p className="text-center mt-6">Loading books...</p>;
@@ -43,7 +58,14 @@ const BookList = () => {
             </tr>
           </thead>
           <tbody>
-            {books?.map((book) => (
+            {books.length === 0 && (
+              <tr>
+                <td className="border px-4 py-2 text-center" colSpan={7}>
+                  No books found.
+                </td>
+              </tr>
+            )}
+            {books.map((book) => (
               <tr key={book._id}>
                 <td className="border px-4 py-2">{book.title}</td>
                 <td className="border px-4 py-2">{book.author}</td>
@@ -53,27 +75,28 @@ const BookList = () => {
                 <td className="border px-4 py-2">
                   {book.available ? "InStock" : "OutOfStock"}
                 </td>
-                <td className="border px-4 py-2 space-y-1 md:space-y-0 md:space-x-2 flex flex-col md:flex-row">
+                <td className="border justify-between px-4 py-2 space-y-1 md:space-y-0 md:space-x-2 flex flex-col md:flex-row">
                   <Button
-                    className="text-blue-600 bg-amber-200 hover:bg-amber-300"
+                    className="text-blue-600 bg-amber-200 hover:bg-amber-300 cursor-pointer"
                     onClick={() => navigate(`/edit-book/${book._id}`)}
                   >
                     Edit
                   </Button>
                   <Button
-                    className="text-green-600 bg-green-200 hover:bg-green-300"
+                    className="text-green-600 bg-green-200 hover:bg-green-300 cursor-pointer"
                     onClick={() => navigate(`/borrow/${book._id}`)}
                   >
                     Borrow
                   </Button>
                   <Button
-                    className="text-red-600 bg-amber-200 hover:bg-amber-300"
-                    onClick={() => handleDelete(book._id)}
+                    disabled={isDeleting}
+                    className="text-red-600 bg-amber-200 hover:bg-amber-300 cursor-pointer"
+                    onClick={() => openModal(book._id!)}
                   >
                     Delete
                   </Button>
                   <Button
-                    className="text-indigo-600 bg-cyan-400 hover:bg-cyan-500"
+                    className="text-indigo-600 bg-cyan-400 hover:bg-cyan-500 cursor-pointer"
                     onClick={() => navigate(`/book-details/${book._id}`)}
                   >
                     Details
@@ -81,16 +104,34 @@ const BookList = () => {
                 </td>
               </tr>
             ))}
-            {!books?.length && (
-              <tr>
-                <td className="border px-4 py-2 text-center" colSpan={7}>
-                  No books found.
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full shadow-lg">
+            <h3 className="text-lg font-semibold mb-4">Confirm Delete</h3>
+            <p>Are you sure you want to delete this book?</p>
+            <div className="mt-6 flex justify-end space-x-3">
+              <button
+                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

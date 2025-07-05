@@ -1,17 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
+import MainLayOut from "../layout/mainLayOut/MainLayOut";
 import BookList from "../features/books/pages/Booklist";
 import AddBook from "../features/books/pages/AddBook";
 import EditBook from "../features/books/pages/EditBook";
-import MainLayOut from "../layout/mainLayOut/MainLayOut";
-import BorrowList from "@/features/borrows/pages/BorrowList";
-import BorrowForm from "@/features/borrows/pages/BorrowForm";
-import BorrowSummary from "@/features/borrows/pages/BorrowSummery";
-import BookDetails from "@/features/books/pages/BookDetails";
+import BookDetails from "../features/books/pages/BookDetails";
+import BorrowList from "../features/borrows/pages/BorrowList";
+import BorrowForm from "../features/borrows/pages/BorrowForm";
+import BorrowSummary from "../features/borrows/pages/BorrowSummery";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayOut />,
+    element: <MainLayOut/>,
     children: [
       {
         path: "/",

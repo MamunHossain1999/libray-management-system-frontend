@@ -16,7 +16,7 @@ const Navbar = () => {
     <div className="w-full bg-green-200 mx-auto">
       <nav className="flex justify-between container mx-auto items-center p-4">
         <Link to="/" className="text-xl font-bold cursor-pointer">
-          My Library
+          📚 My Library
         </Link>
 
         {/* Desktop Menu */}

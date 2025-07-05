@@ -1,50 +1,60 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { IBorrow } from "./types";
+import type {
+  IBorrow,
+  IBorrowResponse,
+  IBorrowSummaryResponse,
+} from "./types";
 
 export const borrowApi = createApi({
   reducerPath: "borrowApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://api-theta-navy.vercel.app/api" }),
-  tagTypes: ["borrow"],
+  tagTypes: ["Borrow"],
   endpoints: (builder) => ({
-    // Create borrow
-    borrowBook: builder.mutation<IBorrow, Partial<IBorrow>>({
-      query: (data) => ({
+    // Create Borrow
+    createBorrow: builder.mutation<IBorrowResponse, Partial<IBorrow>>({
+      query: (borrowData) => ({
         url: "/borrow",
         method: "POST",
-        body: data,
+        body: borrowData,
       }),
-      invalidatesTags: ["borrow"],
+      invalidatesTags: ["Borrow"],
     }),
 
-    // Get all borrows
-    getAllBorrows: builder.query<IBorrow[], void>({
-      query: () => "/borrow",
-      providesTags: ["borrow"],
-    }),
-
-    // Get borrow summary 
-    getBorrowSummary: builder.query<
-      { title: string; isbn: string; totalQuantity: number }[],
-      void
-    >({
+    // Get Borrow Summary
+    getBorrowSummary: builder.query<IBorrowSummaryResponse, void>({
       query: () => "/borrow/summary",
-      providesTags: ["borrow"],
     }),
 
-    // Return a borrowed book
-    returnBook: builder.mutation<void, string>({
-      query: (borrowId) => ({
-        url: `/borrow/${borrowId}`, 
-        method: "POST",
+    // Get All Borrows
+    getAllBorrows: builder.query<{ success: boolean; data: IBorrow[] }, void>({
+      query: () => "/borrow",
+      providesTags: ["Borrow"],
+    }),
+
+    // Delete Borrow
+    deleteBorrow: builder.mutation<{ message: string }, string>({
+      query: (id) => ({
+        url: `/borrow/${id}`,
+        method: "DELETE",
       }),
-      invalidatesTags: ["borrow"],
+      invalidatesTags: ["Borrow"],
+    }),
+
+    // ✅ Return Book
+    returnBook: builder.mutation<{ message: string }, string>({
+      query: (id) => ({
+        url: `/borrow/return/${id}`,
+        method: "PATCH", // or "PUT" based on your backend
+      }),
+      invalidatesTags: ["Borrow"],
     }),
   }),
 });
 
 export const {
-  useBorrowBookMutation,
-  useGetAllBorrowsQuery,
+  useCreateBorrowMutation,
   useGetBorrowSummaryQuery,
-  useReturnBookMutation,
+  useGetAllBorrowsQuery,
+  useDeleteBorrowMutation,
+  useReturnBookMutation, // ✅ export the new hook
 } = borrowApi;

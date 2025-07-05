@@ -1,7 +1,8 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { bookApi } from "../features/books/BookApi";
-import { borrowApi } from "@/features/borrows/BorrowApi";
+import { borrowApi } from "../features/borrows/BorrowApi";
+
 
 export const store = configureStore({
   reducer: {
