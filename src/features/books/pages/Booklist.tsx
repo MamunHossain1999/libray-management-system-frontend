@@ -73,7 +73,7 @@ const BookList = () => {
                 <td className="border px-4 py-2">{book.isbn}</td>
                 <td className="border px-4 py-2">{book.copies}</td>
                 <td className="border px-4 py-2">
-                  {book.available ? "InStock" : "OutOfStock"}
+                  {book.available ? "In-Stock" : "Out-Of-Stock"}
                 </td>
                 <td className="border justify-between px-4 py-2 space-y-1 md:space-y-0 md:space-x-2 flex flex-col md:flex-row">
                   <Button

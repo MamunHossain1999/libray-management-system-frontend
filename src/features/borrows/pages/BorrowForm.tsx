@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useCreateBorrowMutation } from "../BorrowApi"; // ✅ ঠিক hook import
+import { useCreateBorrowMutation } from "../BorrowApi"; 
+import { useGetBooksQuery } from "@/features/books/BookApi";
 
 const BorrowForm = () => {
   const { bookId } = useParams();
@@ -9,14 +10,16 @@ const BorrowForm = () => {
   const [quantity, setQuantity] = useState(1);
   const [dueDate, setDueDate] = useState("");
 
-  const [createBorrow, { isLoading, error }] = useCreateBorrowMutation(); // ✅ ঠিক হুক
+  const [createBorrow, { isLoading, error }] = useCreateBorrowMutation(); 
+  const {refetch} = useGetBooksQuery();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bookId) return toast.error("Invalid book selected!");
     try {
-      await createBorrow({ book: bookId, quantity, dueDate }).unwrap(); // ✅ ঠিক ফাংশন
+      await createBorrow({ book: bookId, quantity, dueDate }).unwrap(); 
       toast.success("Book borrowed successfully!");
+      refetch();
       navigate("/borrow-summary");
     } catch {
       toast.error("Failed to borrow book. Please try again.");
@@ -47,7 +50,7 @@ const BorrowForm = () => {
           onChange={(e) => setDueDate(e.target.value)}
           className="w-full p-2 border rounded mt-1"
           required
-          min={new Date().toISOString().split("T")[0]} // Prevent past dates
+          min={new Date().toISOString().split("T")[0]} 
         />
       </label>
 

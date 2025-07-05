@@ -44,7 +44,7 @@ export const borrowApi = createApi({
     returnBook: builder.mutation<{ message: string }, string>({
       query: (id) => ({
         url: `/borrow/return/${id}`,
-        method: "PATCH", // or "PUT" based on your backend
+        method: "PATCH", 
       }),
       invalidatesTags: ["Borrow"],
     }),
