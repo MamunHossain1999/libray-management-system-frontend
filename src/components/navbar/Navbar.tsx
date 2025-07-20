@@ -69,7 +69,7 @@ const Navbar = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/logout" className="cursor-pointer w-full">
+                <Link to="/loginPage" className="cursor-pointer w-full">
                   Logout
                 </Link>
               </DropdownMenuItem>
@@ -139,7 +139,7 @@ const Navbar = () => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/logout" className="cursor-pointer w-full">
+                      <Link to="/loginPage" className="cursor-pointer w-full">
                         Logout
                       </Link>
                     </DropdownMenuItem>

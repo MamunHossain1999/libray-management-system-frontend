@@ -14,7 +14,7 @@ export const borrowApi = createApi({
     // Create Borrow
     createBorrow: builder.mutation<IBorrowResponse, Partial<IBorrow>>({
       query: (borrowData) => ({
-        url: "/borrow",
+        url: "/api/borrow",
         method: "POST",
         body: borrowData,
       }),
@@ -23,19 +23,19 @@ export const borrowApi = createApi({
 
     // Get Borrow Summary
     getBorrowSummary: builder.query<IBorrowSummaryResponse, void>({
-      query: () => "/borrow/summary",
+      query: () => "/api/borrow/summary",
     }),
 
     // Get All Borrows
     getAllBorrows: builder.query<{ success: boolean; data: IBorrow[] }, void>({
-      query: () => "/borrow",
+      query: () => "/api/borrow",
       providesTags: ["Borrow"],
     }),
 
     // Delete Borrow
     deleteBorrow: builder.mutation<{ message: string }, string>({
       query: (id) => ({
-        url: `/borrow/${id}`,
+        url: `/api/borrow/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Borrow"],
@@ -44,7 +44,7 @@ export const borrowApi = createApi({
     // ✅ Return Book
     returnBook: builder.mutation<{ message: string }, string>({
       query: (id) => ({
-        url: `/borrow/return/${id}`,
+        url: `/api/borrow/return/${id}`,
         method: "PATCH", 
       }),
       invalidatesTags: ["Borrow"],
@@ -57,5 +57,5 @@ export const {
   useGetBorrowSummaryQuery,
   useGetAllBorrowsQuery,
   useDeleteBorrowMutation,
-  useReturnBookMutation, // ✅ export the new hook
+  useReturnBookMutation, 
 } = borrowApi;

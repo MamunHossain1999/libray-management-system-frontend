@@ -7,6 +7,10 @@ import BookDetails from "../features/books/pages/BookDetails";
 import BorrowList from "../features/borrows/pages/BorrowList";
 import BorrowForm from "../features/borrows/pages/BorrowForm";
 import BorrowSummary from "../features/borrows/pages/BorrowSummery";
+import LoginPage from "@/components/loginPage/LoginPage";
+import ResgisterPage from "@/components/registerpage/RegisterPage";
+
+
 
 const router = createBrowserRouter([
   {
@@ -36,8 +40,15 @@ const router = createBrowserRouter([
 
       { path: "/borrow/:bookId", element: <BorrowForm /> },
       { path: "/borrow-summary", element: <BorrowSummary /> },
+       {
+    path: "/loginPage", element: <LoginPage/>
+  },
+  {
+    path: "/registerPage", element: <ResgisterPage/>
+  }
     ],
   },
+ 
 ]);
 
 export default router;
