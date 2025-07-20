@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -10,8 +10,34 @@ import {
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, User } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { logout } from "@/features/userLogin/authSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${baseURL}/api/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(logout());
+      toast.success("Logged out");
+      navigate("/loginPage");
+      window.location.reload();
+    } catch {
+      toast.error("Logout failed");
+    }
+  };
+
   return (
     <div className="w-full bg-green-200 mx-auto">
       <nav className="flex justify-between container mx-auto items-center p-4">
@@ -25,7 +51,9 @@ const Navbar = () => {
             {({ isActive }) => (
               <Button
                 variant="ghost"
-                className={`cursor-pointer ${isActive ? "bg-green-500 text-white" : ""}`}
+                className={`cursor-pointer ${
+                  isActive ? "bg-green-500 text-white" : ""
+                }`}
               >
                 All Books
               </Button>
@@ -36,7 +64,9 @@ const Navbar = () => {
             {({ isActive }) => (
               <Button
                 variant="ghost"
-                className={`cursor-pointer ${isActive ? "bg-green-500 text-white" : ""}`}
+                className={`cursor-pointer ${
+                  isActive ? "bg-green-500 text-white" : ""
+                }`}
               >
                 Add Book
               </Button>
@@ -47,14 +77,14 @@ const Navbar = () => {
             {({ isActive }) => (
               <Button
                 variant="ghost"
-                className={`cursor-pointer ${isActive ? "bg-green-500 text-white" : ""}`}
+                className={`cursor-pointer ${
+                  isActive ? "bg-green-500 text-white" : ""
+                }`}
               >
                 Summary
               </Button>
             )}
           </NavLink>
-
-          
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -69,9 +99,18 @@ const Navbar = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/loginPage" className="cursor-pointer w-full">
-                  Logout
-                </Link>
+                {user ? (
+                  <>
+                    <button
+                      onClick={handleLogout}
+                      className="text-red-500 ml-2 cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/loginPage">Login</Link>
+                )}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -93,7 +132,7 @@ const Navbar = () => {
                         isActive ? "bg-green-500 text-white" : ""
                       }`}
                     >
-                       All Books
+                      All Books
                     </Button>
                   )}
                 </NavLink>
@@ -124,8 +163,6 @@ const Navbar = () => {
                   )}
                 </NavLink>
 
-                
-
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className="cursor-pointer flex justify-center mt-4">
@@ -139,9 +176,19 @@ const Navbar = () => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/loginPage" className="cursor-pointer w-full">
-                        Logout
-                      </Link>
+                      {user ? (
+                        <>
+                         
+                          <button
+                            onClick={handleLogout}
+                            className="text-red-500 ml-2 cursor-pointer"
+                          >
+                            Logout
+                          </button>
+                        </>
+                      ) : (
+                        <Link to="/loginPage">Login</Link>
+                      )}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

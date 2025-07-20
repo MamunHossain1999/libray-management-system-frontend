@@ -1,47 +1,50 @@
 import React, { useState } from "react";
-
-import axios from "axios";
-import { loginUser } from "../authApi";
-import type { LoginFormData } from "../types";
 import { toast } from "react-toastify";
-import { useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import type { LoginRequest } from "../types";
+import { useLoginUserMutation } from "../authApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../authSlice";
 
 const LoginForm = () => {
-    const navigate = useNavigate();
-  const [formData, setFormData] = useState<LoginFormData>({
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState<LoginRequest>({
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // password show/hide state
+
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
     try {
-      await loginUser(formData);
-      toast("Login successful!");
-      navigate('/');
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || "Failed to login.");
-      } else {
-        setError("Unexpected error.");
-      }
-    } finally {
-      setLoading(false);
+      const result = await loginUser(formData).unwrap();
+
+      dispatch(setUser(result.user));
+      toast.success("Login successful!");
+      navigate("/");
+    } catch {
+      toast.error("Failed to login");
     }
   };
 
   return (
     <div className="flex items-center justify-center pt-20 px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Login
+        </h2>
 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
@@ -56,31 +59,41 @@ const LoginForm = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            minLength={6}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              minLength={6}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-2.5 text-gray-600 hover:text-gray-900 focus:outline-none"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+            disabled={isLoading}
+            className="w-full bg-green-400 hover:bg-green-500 text-white font-semibold py-2 rounded-lg transition"
           >
-            {loading ? "Logging in..." : "Login"}
+            {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="text-sm text-center text-gray-600 mt-4">
           Don’t have an account?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
+          <Link to="/registerPage" className="text-blue-600 hover:underline">
             Register
-          </a>
+          </Link>
         </p>
       </div>
     </div>
