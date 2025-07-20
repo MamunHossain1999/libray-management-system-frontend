@@ -9,6 +9,8 @@ import BorrowForm from "../features/borrows/pages/BorrowForm";
 import BorrowSummary from "../features/borrows/pages/BorrowSummery";
 import LoginPage from "@/components/loginPage/LoginPage";
 import ResgisterPage from "@/components/registerpage/RegisterPage";
+import PrivateRoute from "@/privatePage/PrivateRoute";
+
 
 
 
@@ -23,23 +25,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/create-book",
-        element: <AddBook />,
+        element: <PrivateRoute><AddBook/></PrivateRoute>,
       },
       {
         path: "/edit-book/:id",
-        element: <EditBook />,
+        element: <PrivateRoute><EditBook /></PrivateRoute>,
       },
       {
         path: "/book-details/:id",
-        element: <BookDetails />,
+        element: <PrivateRoute><BookDetails /></PrivateRoute>,
       },
       {
         path: "/borrow",
-        element: <BorrowList />,
+        element: <PrivateRoute><BorrowList /></PrivateRoute>,
       },
 
-      { path: "/borrow/:bookId", element: <BorrowForm /> },
-      { path: "/borrow-summary", element: <BorrowSummary /> },
+      { path: "/borrow/:bookId", element: <PrivateRoute><BorrowForm /></PrivateRoute> },
+      { path: "/borrow-summary", element: <PrivateRoute><BorrowSummary /></PrivateRoute> },
        {
     path: "/loginPage", element: <LoginPage/>
   },

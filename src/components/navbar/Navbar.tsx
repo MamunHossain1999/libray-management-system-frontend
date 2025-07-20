@@ -13,9 +13,10 @@ import { Menu, User } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
-import { logout } from "@/features/userLogin/authSlice";
+
 import axios from "axios";
 import { toast } from "react-toastify";
+import { clearUser } from "@/features/userLogin/authSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Navbar = () => {
         {},
         { withCredentials: true }
       );
-      dispatch(logout());
+       dispatch(clearUser());;
       toast.success("Logged out");
       navigate("/loginPage");
       window.location.reload();

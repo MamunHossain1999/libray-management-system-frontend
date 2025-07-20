@@ -6,6 +6,7 @@ import type { LoginRequest } from "../types";
 import { useLoginUserMutation } from "../authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../authSlice";
+import GoogleLoginButton from "@/components/GoogleLoginButton/GoogleLoginButton";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -88,6 +89,9 @@ const LoginForm = () => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+        <p className="py-4">
+            <GoogleLoginButton/>
+        </p>
 
         <p className="text-sm text-center text-gray-600 mt-4">
           Don’t have an account?{" "}

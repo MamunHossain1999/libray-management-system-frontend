@@ -4,6 +4,7 @@ import type { RegisterRequest } from "../types";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../authApi";
+import GoogleLoginButton from "@/components/GoogleLoginButton/GoogleLoginButton";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState<RegisterRequest>({
@@ -87,6 +88,9 @@ const RegisterForm = () => {
               {isLoading ? "Registering..." : "Register"}
             </button>
           </form>
+           <p className="py-4">
+            <GoogleLoginButton/>
+        </p>
 
           <p className="text-sm text-center text-gray-600 mt-4">
             Already have an account?{" "}
