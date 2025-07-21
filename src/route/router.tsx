@@ -11,51 +11,84 @@ import LoginPage from "@/components/loginPage/LoginPage";
 import ResgisterPage from "@/components/registerpage/RegisterPage";
 import PrivateRoute from "@/privatePage/PrivateRoute";
 import HomePage from "@/features/homePage/HomePage";
-
-
-
+import ContactUs from "@/components/ContactUs/ContactUs";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayOut/>,
+    element: <MainLayOut />,
     children: [
       {
         path: "/",
         element: <HomePage />,
       },
-       {
+      {
         path: "/booklist",
         element: <BookList />,
       },
       {
         path: "/create-book",
-        element: <PrivateRoute><AddBook/></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <AddBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/edit-book/:id",
-        element: <PrivateRoute><EditBook /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <EditBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/book-details/:id",
-        element: <PrivateRoute><BookDetails /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <BookDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/borrow",
-        element: <PrivateRoute><BorrowList /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <BorrowList />
+          </PrivateRoute>
+        ),
       },
 
-      { path: "/borrow/:bookId", element: <PrivateRoute><BorrowForm /></PrivateRoute> },
-      { path: "/borrow-summary", element: <PrivateRoute><BorrowSummary /></PrivateRoute> },
-       {
-    path: "/loginPage", element: <LoginPage/>
-  },
-  {
-    path: "/registerPage", element: <ResgisterPage/>
-  }
+      {
+        path: "/borrow/:bookId",
+        element: (
+          <PrivateRoute>
+            <BorrowForm />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/borrow-summary",
+        element: (
+          <PrivateRoute>
+            <BorrowSummary />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
+      },
+      {
+        path: "/loginPage",
+        element: <LoginPage />,
+      },
+      {
+        path: "/registerPage",
+        element: <ResgisterPage />,
+      },
     ],
   },
- 
 ]);
 
 export default router;

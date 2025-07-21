@@ -41,7 +41,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full bg-green-200 mx-auto">
+    <div className="w-full bg-green-400 mx-auto">
       <nav className="flex justify-between container mx-auto items-center p-4">
         <Link
           to="/"
@@ -100,6 +100,19 @@ const Navbar = () => {
                 }`}
               >
                 Summary
+              </Button>
+            )}
+          </NavLink>
+
+          <NavLink to="/contact">
+            {({ isActive }) => (
+              <Button
+                variant="ghost"
+                className={`cursor-pointer ${
+                  isActive ? "bg-green-500 text-white" : ""
+                }`}
+              >
+                Contact Us
               </Button>
             )}
           </NavLink>

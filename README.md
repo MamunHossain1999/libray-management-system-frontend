@@ -91,3 +91,13 @@ carousel
 npm install swiper
 npm install swiper@latest
 
+home page er jnno
+npm i lucide-react
+npm i swiper
+npm i -D @types/react
+
+dependency refresh dewer jnno
+rm -rf node_modules package-lock.json
+npm install
+
+
