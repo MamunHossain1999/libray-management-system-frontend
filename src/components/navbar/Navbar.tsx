@@ -13,6 +13,7 @@ import { Menu, User } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
+import logo from "@/assets/logo.jpg";
 
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -30,7 +31,7 @@ const Navbar = () => {
         {},
         { withCredentials: true }
       );
-       dispatch(clearUser());;
+      dispatch(clearUser());
       toast.success("Logged out");
       navigate("/loginPage");
       window.location.reload();
@@ -42,13 +43,29 @@ const Navbar = () => {
   return (
     <div className="w-full bg-green-200 mx-auto">
       <nav className="flex justify-between container mx-auto items-center p-4">
-        <Link to="/" className="text-xl font-bold cursor-pointer">
-          📚 My Library
+        <Link
+          to="/"
+          className="flex items-center space-x-2 text-xl font-bold cursor-pointer"
+        >
+          <img src={logo} alt="book" className="h-8 w-8 object-contain" />
+          <span>My Library</span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-4">
           <NavLink to="/" end>
+            {({ isActive }) => (
+              <Button
+                variant="ghost"
+                className={`cursor-pointer ${
+                  isActive ? "bg-green-500 text-white" : ""
+                }`}
+              >
+                Home
+              </Button>
+            )}
+          </NavLink>
+          <NavLink to="/booklist" end>
             {({ isActive }) => (
               <Button
                 variant="ghost"
@@ -133,6 +150,18 @@ const Navbar = () => {
                         isActive ? "bg-green-500 text-white" : ""
                       }`}
                     >
+                      Home
+                    </Button>
+                  )}
+                </NavLink>
+                <NavLink to="/booklist" end>
+                  {({ isActive }) => (
+                    <Button
+                      variant="ghost"
+                      className={`cursor-pointer w-full ${
+                        isActive ? "bg-green-500 text-white" : ""
+                      }`}
+                    >
                       All Books
                     </Button>
                   )}
@@ -179,7 +208,6 @@ const Navbar = () => {
                     <DropdownMenuItem asChild>
                       {user ? (
                         <>
-                         
                           <button
                             onClick={handleLogout}
                             className="text-red-500 ml-2 cursor-pointer"

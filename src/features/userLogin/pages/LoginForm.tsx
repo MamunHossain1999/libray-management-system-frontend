@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-
+import loginImg from "@/assets/loginImg/book.jpg";
 import type { LoginRequest } from "../types";
 import { useLoginUserMutation } from "../authApi";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const [showPassword, setShowPassword] = useState(false); // password show/hide state
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const [error, setError] = useState<string | null>(null);
@@ -41,8 +41,11 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center pt-20 px-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8">
+    <div
+      className="flex items-center justify-center min-h-screen px-4 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${loginImg})` }}
+    >
+      <div className="w-full max-w-md bg-white bg-opacity-90 backdrop-blur-md rounded-xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Login
         </h2>
@@ -69,7 +72,7 @@ const LoginForm = () => {
               onChange={handleChange}
               minLength={6}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
             />
             <button
               type="button"
@@ -89,8 +92,9 @@ const LoginForm = () => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+
         <p className="py-4">
-            <GoogleLoginButton/>
+          <GoogleLoginButton />
         </p>
 
         <p className="text-sm text-center text-gray-600 mt-4">

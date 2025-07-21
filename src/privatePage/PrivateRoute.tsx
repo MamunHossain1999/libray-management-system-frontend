@@ -1,15 +1,17 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
 
-interface PrivatePageProps {
+
+interface PrivateRouteProps {
   children: React.ReactNode;
 }
 
-const PrivateRoute: React.FC<PrivatePageProps> = ({ children }) => {
-  const token = Cookies.get("token");  
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  if (!token) {
+  if (!user) {
     return <Navigate to="/loginPage" replace />;
   }
 

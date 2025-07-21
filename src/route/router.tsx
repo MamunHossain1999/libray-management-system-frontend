@@ -10,6 +10,7 @@ import BorrowSummary from "../features/borrows/pages/BorrowSummery";
 import LoginPage from "@/components/loginPage/LoginPage";
 import ResgisterPage from "@/components/registerpage/RegisterPage";
 import PrivateRoute from "@/privatePage/PrivateRoute";
+import HomePage from "@/features/homePage/HomePage";
 
 
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <HomePage />,
+      },
+       {
+        path: "/booklist",
         element: <BookList />,
       },
       {

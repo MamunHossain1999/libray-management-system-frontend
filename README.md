@@ -86,3 +86,8 @@ All routes are public and focus solely on core library features such as viewing,
 
 google 
 https://console.cloud.google.com
+
+carousel
+npm install swiper
+npm install swiper@latest
+
