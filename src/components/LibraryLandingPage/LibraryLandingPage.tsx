@@ -83,9 +83,6 @@ const LibraryLandingPage = () => {
           <FeaturedBlogs />
         </div>
       </section>
-
-      {/* FOOTER */}
-      {/* <Footer /> */}
     </div>
   );
 };

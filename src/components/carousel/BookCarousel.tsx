@@ -28,7 +28,7 @@ const BookCarousel = () => {
     >
       {books.map((book, index) => (
         <SwiperSlide key={index}>
-          <img src={book} alt={`Book ${index + 1}`} className="w-full rounded-lg shadow-md" />
+          <img src={book} alt={`Book ${index + 1}`} className="w-full shadow-md" />
         </SwiperSlide>
       ))}
     </Swiper>

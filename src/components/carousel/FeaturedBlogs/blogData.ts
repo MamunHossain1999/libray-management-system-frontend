@@ -1,6 +1,6 @@
 import img1 from '@/assets/home/pexels-alinevianafoto-2465877.jpg';
 import img2 from '@/assets/home/pexels-mikey-dabro-293966-1002655.jpg';
-import img3 from '@/assets/home/pexels-mikey-dabro-293966-1002655.jpg';
+import img3 from '@/assets/home/pexels-nietjuhart-1809340.jpg';
 
 export interface Blog {
   title: string;
