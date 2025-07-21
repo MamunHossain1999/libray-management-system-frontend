@@ -100,4 +100,5 @@ dependency refresh dewer jnno
 rm -rf node_modules package-lock.json
 npm install
 
+imgbb থেকে API Key নিতে হবে: https://imgbb.com
 

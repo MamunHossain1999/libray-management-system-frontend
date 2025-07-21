@@ -5,7 +5,7 @@ import { BookOpen, Users, Calendar, CreditCard } from "lucide-react";
 import bookHero from "@/assets/carouselImg/book1.jpg";
 import quoteIcon from "@/assets/carouselImg/book2.jpg";
 import BookCarousel from "../carousel/BookCarousel";
-import FeaturedBlogs from "../carousel/FeaturedBlogs/FeaturedBlogs";
+import FeaturedBlogs from "../FeaturedBlogs/FeaturedBlogs";
 import borrowBook from '@/assets/carouselImg/bookimg.jpg'
 
 const LibraryLandingPage = () => {

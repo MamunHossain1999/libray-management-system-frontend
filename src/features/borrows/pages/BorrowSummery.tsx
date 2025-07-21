@@ -1,6 +1,5 @@
 import { useGetBorrowSummaryQuery } from "../BorrowApi";
 
-
 interface BorrowSummaryItem {
   book: {
     title: string;
@@ -8,7 +7,6 @@ interface BorrowSummaryItem {
   };
   totalQuantity: number;
 }
-
 
 const BorrowSummary = () => {
   const { data, isLoading, isError } = useGetBorrowSummaryQuery();
@@ -27,33 +25,31 @@ const BorrowSummary = () => {
     );
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 px-4">
-      <h2 className="text-[18px] font-bold mb-6 text-center">Borrow Summary</h2>
+    <div className="container mx-auto mt-10 px-4">
+      <h2 className="text-[20px] font-bold mb-6 text-center">Borrow Summary</h2>
 
-      <div className="overflow-x-auto shadow rounded border">
-        <table className="w-full text-sm border-collapse">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="p-3 border">#</th>
-              <th className="p-3 border text-left">Book Title</th>
-              <th className="p-3 border text-left">ISBN</th>
-              <th className="p-3 border text-center">Total Borrowed</th>
-            </tr>
-          </thead>
-          <tbody>
-            {summary?.map((item, i) => (
-              <tr
-                key={item.book.isbn || i}
-                className="text-center hover:bg-gray-50"
-              >
-                <td className="p-2 border">{i + 1}</td>
-                <td className="p-2 border text-left">{item.book.title}</td>
-                <td className="p-2 border text-left">{item.book.isbn}</td>
-                <td className="p-2 border">{item.totalQuantity}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {summary.map((item, i) => (
+          <div
+            key={item.book.isbn || i}
+            className="bg-white border shadow-sm rounded-lg p-5 space-y-2"
+          >
+            <div className="text-sm text-gray-500">#{i + 1}</div>
+            <h3 className="text-lg font-semibold text-green-700">
+              {item.book.title}
+            </h3>
+            <p>
+              <span className="font-medium">ISBN:</span>{" "}
+              {item.book.isbn}
+            </p>
+            <p>
+              <span className="font-medium">Total Borrowed:</span>{" "}
+              <span className="text-blue-600 font-semibold">
+                {item.totalQuantity}
+              </span>
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

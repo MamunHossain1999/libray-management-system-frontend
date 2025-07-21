@@ -10,6 +10,7 @@ export interface IBook {
   available: boolean;
   createdAt: string;
   updatedAt: string;
+  image?:string;
   __v?: number;
 }
 
