@@ -42,7 +42,7 @@ console.log(user)
   ];
 
   return (
-    <div className="w-full py-4 bg-green-400 sticky top-0">
+    <div className="w-full py-4 bg-green-400 sticky top-0 z-50">
       <nav className="text-[20px] flex justify-between  items-center container mx-auto px-4 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 font-bold">

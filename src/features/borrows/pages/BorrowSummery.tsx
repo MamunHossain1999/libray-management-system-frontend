@@ -1,4 +1,5 @@
 import { useGetBorrowSummaryQuery } from "../BorrowApi";
+import { motion } from "framer-motion";
 
 interface BorrowSummaryItem {
   book: {
@@ -30,8 +31,12 @@ const BorrowSummary = () => {
 
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {summary.map((item, i) => (
-          <div
+          <motion.div
             key={item.book.isbn || i}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: i * .8 }}
+            viewport={{ once: false }} 
             className="bg-white border shadow-sm rounded-lg p-5 space-y-2"
           >
             <div className="text-sm text-gray-500">#{i + 1}</div>
@@ -39,8 +44,7 @@ const BorrowSummary = () => {
               {item.book.title}
             </h3>
             <p>
-              <span className="font-medium">ISBN:</span>{" "}
-              {item.book.isbn}
+              <span className="font-medium">ISBN:</span> {item.book.isbn}
             </p>
             <p>
               <span className="font-medium">Total Borrowed:</span>{" "}
@@ -48,7 +52,7 @@ const BorrowSummary = () => {
                 {item.totalQuantity}
               </span>
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

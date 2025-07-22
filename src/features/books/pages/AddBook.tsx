@@ -4,6 +4,7 @@ import { useAddBookMutation } from "../BookApi";
 import type { IBook } from "../types";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const AddBook = () => {
   const [addBook] = useAddBookMutation();
@@ -22,11 +23,18 @@ const AddBook = () => {
   });
 
   // 🔄 Handle form input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : type === "number"
+          ? Number(value)
+          : value,
     }));
   };
 
@@ -35,14 +43,15 @@ const AddBook = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    
     const formDataImg = new FormData();
     formDataImg.append("image", file);
 
     try {
       setUploading(true);
       const response = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
         formDataImg
       );
       const imageUrl = response.data.data.url;
@@ -71,7 +80,12 @@ const AddBook = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto md:pt-12 md:mt-7 p-4 shadow-2xl">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-xl mx-auto md:pt-12 md:mt-7 p-4 shadow-2xl"
+    >
       <h2 className="text-[20px] font-bold mb-4">Add New Book</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -113,14 +127,18 @@ const AddBook = () => {
 
         {/* 📤 File upload field */}
         <div>
-          <label className="block text-sm font-medium mb-1">Upload Cover Image</label>
+          <label className="block text-sm font-medium mb-1">
+            Upload Cover Image
+          </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
             className="w-full"
           />
-          {uploading && <p className="text-sm text-blue-500 mt-1">Uploading...</p>}
+          {uploading && (
+            <p className="text-sm text-blue-500 mt-1">Uploading...</p>
+          )}
           {formData.image && (
             <img
               src={formData.image}
@@ -166,7 +184,7 @@ const AddBook = () => {
           {uploading ? "Uploading Image..." : "Add Book"}
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

@@ -102,3 +102,5 @@ npm install
 
 imgbb থেকে API Key নিতে হবে: https://imgbb.com
 
+mouse scroll animation
+npm install framer-motion react-intersection-observer

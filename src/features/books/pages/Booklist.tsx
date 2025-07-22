@@ -2,11 +2,9 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import type { IBook } from "../types";
-import {
-  useGetBooksQuery,
-  useDeleteBookMutation,
-} from "../BookApi";
+import { useGetBooksQuery, useDeleteBookMutation } from "../BookApi";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const BookList = () => {
   const navigate = useNavigate();
@@ -14,7 +12,6 @@ const BookList = () => {
   const books: IBook[] = data?.data ?? [];
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
 
-  console.log(books)
   const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -36,7 +33,10 @@ const BookList = () => {
   };
 
   if (isLoading) return <p className="text-center mt-6">Loading books...</p>;
-  if (isError) return <p className="text-center mt-6 text-red-500">Failed to load books.</p>;
+  if (isError)
+    return (
+      <p className="text-center mt-6 text-red-500">Failed to load books.</p>
+    );
 
   return (
     <div className="container mx-auto p-4 md:pt-12">
@@ -47,13 +47,20 @@ const BookList = () => {
       ) : (
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {books.map((book) => (
-            <div
+            <motion.div
               key={book._id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              // viewport={{ once: true }}
               className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 flex flex-col"
             >
               {/* Book Image */}
               <img
-                src={book.image || "https://via.placeholder.com/300x180?text=No+Image"}
+                src={
+                  book.image ||
+                  "https://via.placeholder.com/300x180?text=No+Image"
+                }
                 alt={book.title}
                 className="h-56 w-full "
               />
@@ -61,17 +68,25 @@ const BookList = () => {
               {/* Book Info */}
               <div className="p-5 space-y-2 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-green-700">{book.title}</h3>
+                  <h3 className="text-lg font-bold text-green-700">
+                    {book.title}
+                  </h3>
                   {/* <p><span className="font-medium">Author:</span> {book.author}</p> */}
-                  <p><span className="font-medium">Genre:</span> {book.genre}</p>
+                  <p>
+                    <span className="font-medium">Genre:</span> {book.genre}
+                  </p>
                   {/* <p><span className="font-medium">ISBN:</span> {book.isbn}</p> */}
                   {/* <p><span className="font-medium">Copies:</span> {book.copies}</p> */}
                   <p>
                     <span className="font-medium">Status:</span>{" "}
                     {book.available ? (
-                      <span className="text-green-600 font-semibold">In-Stock</span>
+                      <span className="text-green-600 font-semibold">
+                        In-Stock
+                      </span>
                     ) : (
-                      <span className="text-red-500 font-semibold">Out-Of-Stock</span>
+                      <span className="text-red-500 font-semibold">
+                        Out-Of-Stock
+                      </span>
                     )}
                   </p>
                 </div>
@@ -105,7 +120,7 @@ const BookList = () => {
                   </Button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       )}

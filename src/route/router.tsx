@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/booklist",
-        element: <BookList />,
+        element: <PrivateRoute><BookList /></PrivateRoute>,
       },
       {
         path: "/create-book",
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/contact",
-        element: <ContactUs />,
+        element: <PrivateRoute><ContactUs /></PrivateRoute>,
       },
       {
         path: "/loginPage",

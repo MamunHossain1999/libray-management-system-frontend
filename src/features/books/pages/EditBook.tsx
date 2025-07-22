@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGetBookByIdQuery, useUpdateBookMutation } from "../BookApi";
-import type { IBook} from "../types";
+import type { IBook } from "../types";
+import { motion } from "framer-motion";
 
 const EditBook = () => {
   const { id } = useParams<{ id: string }>();
@@ -48,11 +49,20 @@ const EditBook = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center py-4">Loading book data...</p>;
-  if (isError || !bookResponse) return <p className="text-center py-4 text-red-500">Failed to load book data.</p>;
+  if (isLoading)
+    return <p className="text-center py-4">Loading book data...</p>;
+  if (isError || !bookResponse)
+    return (
+      <p className="text-center py-4 text-red-500">Failed to load book data.</p>
+    );
 
   return (
-    <div className="max-w-xl mx-auto p-4 pt-12 shadow-md">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="max-w-xl mx-auto p-4 pt-12 shadow-md"
+    >
       <h2 className="text-[18px] font-bold mb-4 text-center">Edit Book</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -126,7 +136,7 @@ const EditBook = () => {
           Update Book
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

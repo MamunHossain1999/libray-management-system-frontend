@@ -32,7 +32,7 @@ const BorrowList = () => {
               <th className="p-2 border text-left">Book</th>
               <th className="p-2 border">Borrowed At</th>
               <th className="p-2 border">Status</th>
-              <th className="p-2 border">Actions</th>
+             
             </tr>
           </thead>
           <tbody>

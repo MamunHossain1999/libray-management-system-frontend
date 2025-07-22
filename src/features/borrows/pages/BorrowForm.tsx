@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useCreateBorrowMutation } from "../BorrowApi"; 
+import { useCreateBorrowMutation } from "../BorrowApi";
 import { useGetBooksQuery } from "@/features/books/BookApi";
+import { motion } from "framer-motion";
 
 const BorrowForm = () => {
   const { bookId } = useParams();
@@ -10,14 +11,14 @@ const BorrowForm = () => {
   const [quantity, setQuantity] = useState(1);
   const [dueDate, setDueDate] = useState("");
 
-  const [createBorrow, { isLoading, error }] = useCreateBorrowMutation(); 
-  const {refetch} = useGetBooksQuery();
+  const [createBorrow, { isLoading, error }] = useCreateBorrowMutation();
+  const { refetch } = useGetBooksQuery();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bookId) return toast.error("Invalid book selected!");
     try {
-      await createBorrow({ book: bookId, quantity, dueDate }).unwrap(); 
+      await createBorrow({ book: bookId, quantity, dueDate }).unwrap();
       toast.success("Book borrowed successfully!");
       refetch();
       navigate("/borrow-summary");
@@ -27,7 +28,13 @@ const BorrowForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 space-y-4">
+    <motion.form
+      onSubmit={handleSubmit}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-md mx-auto mt-10 space-y-4"
+    >
       <h2 className="text-xl font-bold">📚 Borrow Book</h2>
 
       <label className="block">
@@ -50,7 +57,7 @@ const BorrowForm = () => {
           onChange={(e) => setDueDate(e.target.value)}
           className="w-full p-2 border rounded mt-1"
           required
-          min={new Date().toISOString().split("T")[0]} 
+          min={new Date().toISOString().split("T")[0]}
         />
       </label>
 
@@ -69,7 +76,7 @@ const BorrowForm = () => {
       >
         {isLoading ? "Borrowing..." : "Borrow Book"}
       </button>
-    </form>
+    </motion.form>
   );
 };
 
