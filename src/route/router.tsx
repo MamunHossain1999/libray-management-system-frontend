@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/booklist",
-        element: <PrivateRoute><BookList /></PrivateRoute>,
+        element: <BookList />,
       },
       {
         path: "/create-book",
