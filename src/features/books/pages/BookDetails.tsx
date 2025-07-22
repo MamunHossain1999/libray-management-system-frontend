@@ -5,7 +5,7 @@ import type { IBook } from "../types";
 
 const BookDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data:details, isLoading, isError } = useGetBookByIdQuery(id!);
+  const { data: details, isLoading, isError } = useGetBookByIdQuery(id!);
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError || !details) return <p className="text-center mt-10 text-red-500">Failed to load book details.</p>;
@@ -13,45 +13,38 @@ const BookDetails: React.FC = () => {
   const book: IBook = details.data;
 
   return (
-    <div className="max-w-2xl mx-auto p-4 mt-12">
-      <h1 className="text-2xl font-bold mb-6 text-center">Book Details</h1>
+    <div className="max-w-3xl mx-auto p-4 mt-12">
+      <h1 className="text-3xl font-semibold text-center mb-8">📘 Book Details</h1>
 
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse border border-gray-300 text-left">
-          <tbody>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2 w-1/3">Title</th>
-              <td className="border px-4 py-2">{book.title}</td>
-            </tr>
-            <tr>
-              <th className="border px-4 py-2">Author</th>
-              <td className="border px-4 py-2">{book.author}</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2">Genre</th>
-              <td className="border px-4 py-2">{book.genre}</td>
-            </tr>
-            <tr>
-              <th className="border px-4 py-2">ISBN</th>
-              <td className="border px-4 py-2">{book.isbn}</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2">Copies</th>
-              <td className="border px-4 py-2">{book.copies}</td>
-            </tr>
-            <tr>
-              <th className="border px-4 py-2">Available</th>
-              <td className="border px-4 py-2">{book.available ? "Yes" : "No"}</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2 align-top">Description</th>
-              <td className="border px-4 py-2">{book.description || "No description provided."}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="bg-white shadow-md rounded-2xl overflow-hidden border border-gray-200">
+        {/* ✅ Cover Image */}
+        {book.image && (
+          <img
+            src={book.image}
+            alt={book.title}
+            className="w-full h-64 object-cover"
+          />
+        )}
+
+        <div className="p-6 space-y-4">
+          <DetailRow label="Title" value={book.title} />
+          <DetailRow label="Author" value={book.author} />
+          <DetailRow label="Genre" value={book.genre} />
+          <DetailRow label="ISBN" value={book.isbn} />
+          <DetailRow label="Copies" value={book.copies.toString()} />
+          <DetailRow label="Available" value={book.available ? "Yes" : "No"} />
+          <DetailRow label="Description" value={book.description || "No description provided."} />
+        </div>
       </div>
     </div>
   );
 };
 
 export default BookDetails;
+
+const DetailRow = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex justify-between items-start border-b pb-3 last:border-none last:pb-0">
+    <span className="font-medium text-gray-600 w-1/3">{label}:</span>
+    <span className="text-gray-800 w-2/3">{value}</span>
+  </div>
+);

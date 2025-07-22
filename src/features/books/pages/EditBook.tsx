@@ -52,7 +52,7 @@ const EditBook = () => {
   if (isError || !bookResponse) return <p className="text-center py-4 text-red-500">Failed to load book data.</p>;
 
   return (
-    <div className="max-w-xl mx-auto p-4 pt-12">
+    <div className="max-w-xl mx-auto p-4 pt-12 shadow-md">
       <h2 className="text-[18px] font-bold mb-4 text-center">Edit Book</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -121,7 +121,7 @@ const EditBook = () => {
         </label>
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="px-4 py-2 bg-green-400 text-white rounded hover:bg-green-500"
         >
           Update Book
         </button>

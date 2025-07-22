@@ -14,6 +14,12 @@ export const useAuthInit = () => {
         const res = await axios.get(`${baseURL}/api/auth/me`, {
           withCredentials: true,
         });
+         dispatch(setUser({
+          id: res.data.user.id,
+          name: res.data.user.name,
+          email: res.data.user.email,
+        }));
+        
         dispatch(setUser(res.data.user));
       } catch {
         dispatch(setLoadingDone()); 

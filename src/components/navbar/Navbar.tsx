@@ -20,7 +20,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
   const baseURL = import.meta.env.VITE_API_BASE_URL;
-
+console.log(user)
   const handleLogout = async () => {
     try {
       await axios.post(`${baseURL}/api/auth/logout`, {}, { withCredentials: true });
@@ -42,8 +42,8 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="w-full py-4 bg-green-400">
-      <nav className="text-[20px] flex justify-between items-center container mx-auto px-4 py-3">
+    <div className="w-full py-4 bg-green-400 sticky top-0">
+      <nav className="text-[20px] flex justify-between  items-center container mx-auto px-4 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 font-bold">
           <img src={logo} alt="logo" className="h-8 w-8 object-contain" />
@@ -74,7 +74,7 @@ const Navbar = () => {
             <DropdownMenuContent>
               {user && (
                 <DropdownMenuItem asChild>
-                  <Link to="/profile" className="w-full text-[20px]">Profile</Link>
+                  <Link to="/profile" className="w-full text-[20px]">Profile ({user.name})</Link>
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem asChild>

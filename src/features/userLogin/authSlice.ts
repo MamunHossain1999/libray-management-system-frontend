@@ -8,7 +8,7 @@ interface UserState {
 
 const initialState: UserState = {
   user: null,
-  loading: true, // ✅ initial loading true
+  loading: true, 
 };
 
 const authSlice = createSlice({

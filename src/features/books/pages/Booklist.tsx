@@ -55,17 +55,17 @@ const BookList = () => {
               <img
                 src={book.image || "https://via.placeholder.com/300x180?text=No+Image"}
                 alt={book.title}
-                className="h-48 w-full object-cover"
+                className="h-56 w-full "
               />
 
               {/* Book Info */}
               <div className="p-5 space-y-2 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 className="text-lg font-bold text-green-700">{book.title}</h3>
-                  <p><span className="font-medium">Author:</span> {book.author}</p>
+                  {/* <p><span className="font-medium">Author:</span> {book.author}</p> */}
                   <p><span className="font-medium">Genre:</span> {book.genre}</p>
-                  <p><span className="font-medium">ISBN:</span> {book.isbn}</p>
-                  <p><span className="font-medium">Copies:</span> {book.copies}</p>
+                  {/* <p><span className="font-medium">ISBN:</span> {book.isbn}</p> */}
+                  {/* <p><span className="font-medium">Copies:</span> {book.copies}</p> */}
                   <p>
                     <span className="font-medium">Status:</span>{" "}
                     {book.available ? (
@@ -112,7 +112,7 @@ const BookList = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full shadow-lg">
             <h3 className="text-lg font-semibold mb-4">Confirm Delete</h3>
             <p>Are you sure you want to delete this book?</p>

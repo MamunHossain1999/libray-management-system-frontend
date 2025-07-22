@@ -64,7 +64,7 @@ const BorrowForm = () => {
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:bg-blue-400"
+        className="w-full bg-green-400 text-white py-2 rounded hover:bg-green-500 disabled:bg-blue-400"
         disabled={isLoading}
       >
         {isLoading ? "Borrowing..." : "Borrow Book"}
